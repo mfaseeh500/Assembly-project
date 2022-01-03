@@ -3,9 +3,9 @@
 .stack 100h
 .data
 menu db '*****************MENU*********************$'
-menu1 db 'Press 1 for rikshw$'
+menu1 db 'Press 1 for rikshaw$'
 menu2 db 'Press 2 for cars$'
-menu3 db 'Press 3 for bus$'
+menu3 db 'Press 3 for bike$'
 menu4 db 'Press 4 to show the record$'
 menu5 db 'Press 5 to delete the record$'
 menu6 db 'Press 6 to exit$'
@@ -17,9 +17,9 @@ msg5 db 'record$'
 msg6 db 'there is more space$'
 msg7 db 'the total amount is=$'
 msg8 db 'the total numbers of vehicles parked=$'
-msg9 db 'the total number of rikshws parked=$'
+msg9 db 'the total number of rikshaws parked=$'
 msg10 db 'the total number of cars parked=$'
-msg11 db 'the total number of buses parked=$'
+msg11 db 'the total number of bikes parked=$'
 msg12 db '***Record deleted successfully***$'
 amount dw 0
 count dw  '0'
@@ -123,7 +123,7 @@ int 21h
 mov dx,offset menu6
 mov ah,9
 int 21h
-mov dx,10
+mov dx,10   ;newline logic
 mov ah,2
 int 21h
 mov dx,13
