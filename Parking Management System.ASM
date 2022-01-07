@@ -1,14 +1,19 @@
-
+print macro p1
+    mov dx,offset p1
+    mov ah,09h
+    int 21h
+    endm
+    
 .model small
 .stack 100h
 .data
-menu db '*****************MENU*********************$'
-menu1 db 'Press 1 for rikshaw$'
-menu2 db 'Press 2 for cars$'
-menu3 db 'Press 3 for bike$'
-menu4 db 'Press 4 to show the record$'
-menu5 db 'Press 5 to delete the record$'
-menu6 db 'Press 6 to exit$'
+menu db  '****************************MENU**********************************$'
+menu1 db '                    Press 1 for rikshaw$                           '
+menu2 db '                    Press 2 for cars$                              '
+menu3 db '                    Press 3 for bike$                              '
+menu4 db '                    Press 4 to show the record$                    '
+menu5 db '                    Press 5 to delete all records$                 '
+menu6 db '                    Press 6 to exit the program$                   '
 msg1 db 'Parking Is Full$'
 msg2 db 'Wrong input$'
 msg3 db 'car$'
@@ -31,6 +36,7 @@ am3 dw ?
 r dw '0'
 c db '0'
 b db '0'
+newline db 0ah,0dh,"$"
 .code
 main proc
 mov ax,@data
@@ -42,108 +48,28 @@ mov ds,ax
 
 while_:   
              ;Menu
-mov dx,10
-mov ah,2
-int 21h
-mov dx,13
-mov ah,2
-int 21h
+print newline
+print menu
+print newline
+print menu1
+print newline
+print menu2
+print newline
+print menu3
+print newline
+print menu4   
+print newline
+print menu5
+print newline
+print menu6
+print newline
 
-
-mov dx,offset menu
-mov ah,9
-int 21h
-
-mov dx,10
-mov ah,2
-int 21h
-mov dx,13
-mov ah,2
-int 21h
-
-
-mov dx,offset menu1
-mov ah,9
-int 21h
-
-mov dx,10
-mov ah,2
-int 21h
-mov dx,13
-mov ah,2
-int 21h
-
-
-mov dx,offset menu2
-mov ah,9
-int 21h
-
-mov dx,10
-mov ah,2
-int 21h
-mov dx,13
-mov ah,2
-int 21h
-
-
-mov dx,offset menu3
-mov ah,9
-int 21h
-mov dx,10
-mov ah,2
-int 21h
-mov dx,13
-mov ah,2
-int 21h
-
-
-mov dx,offset menu4
-mov ah,9
-int 21h
-mov dx,10
-mov ah,2
-int 21h
-mov dx,13
-mov ah,2
-int 21h
-
-
-
-mov dx,offset menu5
-mov ah,9
-int 21h
-mov dx,10
-mov ah,2
-int 21h
-mov dx,13
-mov ah,2
-int 21h
-
-
-mov dx,offset menu6
-mov ah,9
-int 21h
-mov dx,10   ;newline logic
-mov ah,2
-int 21h
-mov dx,13
-mov ah,2
-int 21h
-
-
-
-
-  ;userinput
+  ;Taking user input
 
 mov ah,1
 int 21h
 mov bl,al
-mov dx,10
-mov ah,2
-int 21h
-mov dx,13
-mov ah,2
-int 21h
+print newline
 
   ;now compare
 mov al,bl
@@ -161,16 +87,10 @@ cmp al,'6'
 je end_
 
 
-mov dx,offset msg2
-mov ah,9
-int 21h
+print msg2
 
-mov dx,10
-mov ah,2
-int 21h
-mov dx,13
-mov ah,2
-int 21h
+print newline
+
 jmp while_
 
 rikshw:
@@ -207,9 +127,7 @@ main endp
 rikshaw proc
 cmp count,'8'
 jle rikshw1
-mov dx,offset msg1
-mov ah,9
-int 21h
+print msg1
 jmp while_
 jmp end_
 
@@ -287,9 +205,7 @@ jmp end_
 buss proc
 cmp count,'8'
 jle bus1
-mov dx,offset msg1
-mov ah,9
-int 21h
+print msg1
 jmp while_
 jmp end_
 
@@ -323,9 +239,7 @@ jmp end_
 
 
 recrd proc
-mov dx,offset msg7
-mov ah,9
-int 21h
+print msg7
 
 
 ; print here the whole amount
@@ -353,73 +267,42 @@ loop totalprint
 
 
 
-mov dx,10
-mov ah,2
-int 21h
-mov dx,13
-mov ah,2
-int 21h
+print newline
 
 
 
 
 
 
-
-mov dx,offset msg8
-mov ah,9
-int 21h
+print msg8
 
 mov dx,count
 mov ah,2
 int 21h
 
-mov dx,10
-mov ah,2
-int 21h
-mov dx,13
-mov ah,2
-int 21h
+print newline
 
 
-mov dx,offset msg9
-mov ah,9
-int 21h
+print msg9
 
 mov dx,r
 mov ah,2
 int 21h
 
-mov dx,10
-mov ah,2
-int 21h
-mov dx,13
-mov ah,2
-int 21h
+print newline
 
 
-
-mov dx,offset msg10
-mov ah,9
-int 21h
-
+print msg10
 
 mov dl,c
 mov ah,2
 int 21h
 
-mov dx,10
-mov ah,2
-int 21h
-mov dx,13
-mov ah,2
-int 21h
+print newline
 
 
 
-mov dx,offset msg11
-mov ah,9
-int 21h
+print msg11
 
 mov dl,b
 mov ah,2
@@ -436,17 +319,9 @@ mov b,'0'
 mov amount,0
 ;sub amount,48
 mov count,'0'
-mov dx,offset msg12
-mov ah,9
-int 21h
+print msg12
 
-mov dx,10
-mov ah,2
-int 21h
-mov dx,13
-mov ah,2
-int 21h
-
+print newline
 
 
 
