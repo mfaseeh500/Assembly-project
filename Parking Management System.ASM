@@ -3,7 +3,11 @@ print macro p1
     mov ah,09h
     int 21h
     endm
-    
+clr macro     ;logic for clr screen but not used in the project till now
+ mov  ah, 0
+  mov  al, 3
+  int  10h
+endm    
 .model small
 .stack 100h
 .data
