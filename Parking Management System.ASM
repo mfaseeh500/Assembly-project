@@ -1,3 +1,7 @@
+;COAL LAB PROJECT
+;MUHAMMAD FASEEH SHAHID 2012390
+;ALI ZAFAR QURESHI 2012374
+
 print macro p1       ;logic for printing strings
 mov dx,offset p1
 mov ah,09h
@@ -19,7 +23,7 @@ mov ah, 86h
 int 15h
 endm 
 
-delay macro       ;logic for 5 second delay
+delay1 macro       ;logic for 5 second delay
 mov cx, 0Fh
 mov dx, 4240h
 mov ah, 86h
@@ -38,18 +42,18 @@ endm
 .stack 100h
 .data
 menu db  '****************************MENU**********************************$'
-menu1 db '                    PRESS 1 FOR CAR (RS 300)$                      '
+menu1 db '                    PRESS 1 FOR CAR  (RS 100)$                     '
 menu2 db '                    PRESS 2 FOR BIKE (RS 50)$                      '
 menu3 db '                    Press 3 TO SHOW THE RECORDS$                   '
 menu4 db '                    Press 4 TO DELETE ALL THE RECORDS$             '
 menu5 db '                    Press 5 TO EXIT$                               '
-msg1 db  '                         PARKING IS FULL$                          '
-msg2 db  '                         WRONG INPUT$                              '
-msg7 db  '                    TOTAL AMOUNT =$'
-msg8 db  '                    TOTAL NUMBERS OF VEHICLES PARKED =$'
-msg10 db 'the total number of cars parked=$'
-msg11 db 'the total number of bikes parked=$'
-msg12 db '***Record deleted successfully***$'
+msg1 db  '                    PARKING IS FULL$                               '
+msg2 db  '                    WRONG INPUT$                                   '
+msg3 db  '                    TOTAL AMOUNT =$                                '
+msg4 db  '                    TOTAL NUMBERS OF VEHICLES PARKED =$            '
+msg5 db  '                    TOTAL CARS PARKED  =$                          '
+msg6 db  '                    TOTAL BIKES PARKED =$                          '
+msg7 db  '                    ***RECORD SUCCESSFULLY DELETED***$             '
 amount dw 0
 count dw  '0'
 r dw '0'
@@ -113,6 +117,7 @@ call caar
 
 
 rec:
+clr
 call recrd
 
 
@@ -174,7 +179,7 @@ jmp end_
 
 
 
-bikes proc
+bikes proc    ;procrdure for bikes
 cmp count,'8'
 jle bike1
 print msg1
@@ -211,103 +216,59 @@ jmp while_
 jmp end_
 
 
-recrd proc
-print msg7
-
-
-; print here the whole amount
-mov ax, amount
-
+recrd proc     ;procedure for printing all the records
+print msg3
+mov ax, amount  ; print here the whole amount
 mov dx,0
 mov bx,10
 mov cx,0
 totalpush:
-        div bx
-        push dx
-        mov dx,0
-      ;  mov ah,0
-        inc cx
-        cmp ax,0
-       jne totalpush
-   
+div bx
+push dx
+mov dx,0
+inc cx
+cmp ax,0
+jne totalpush
 totalprint:
-        pop dx
-        add dx,48
-        mov ah,2
-        int 21h
+pop dx
+add dx,48
+mov ah,2
+int 21h
 loop totalprint
-
-
-
-
 print newline
-
-
-
-
-
-
-print msg8
-
+print msg4
 mov dx,count
 mov ah,2
 int 21h
-
-print newline
-
-
-print msg9
-
 mov dx,r
 mov ah,2
 int 21h
-
 print newline
-
-
-print msg10
-
+print msg5
 mov dl,c
 mov ah,2
 int 21h
-
 print newline
-
-
-
-print msg11
-
+print msg6
 mov dl,b
 mov ah,2
 int 21h
-
+delay1
+clr
 jmp while_
 jmp end_
 
-
-delt proc
+delt proc    ;procedure for deleting
 mov r,'0'
 mov c,'0'
 mov b,'0'
 mov amount,0
 ;sub amount,48
 mov count,'0'
-print msg12
-
-print newline
-
-
-
+clr
+print msg7
+delay 
+clr
 jmp while_
 jmp end_
-
-
-
-
-
-
-
-
-
-
 end main
