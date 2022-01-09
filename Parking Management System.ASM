@@ -17,6 +17,21 @@ mov ah, 86h
 int 15h
 mov ah, 86h
 int 15h
+endm 
+
+delay macro       ;logic for 5 second delay
+mov cx, 0Fh
+mov dx, 4240h
+mov ah, 86h
+int 15h
+mov ah, 86h
+int 15h
+mov ah, 86h
+int 15h
+mov ah, 86h
+int 15h
+mov ah, 86h
+int 15h
 endm
 
 .model small
@@ -28,11 +43,10 @@ menu2 db '                    PRESS 2 FOR BIKE (RS 50)$                      '
 menu3 db '                    Press 3 TO SHOW THE RECORDS$                   '
 menu4 db '                    Press 4 TO DELETE ALL THE RECORDS$             '
 menu5 db '                    Press 5 TO EXIT$                               '
-msg1 db  '                         Parking Is Full$                           '
-msg2 db  '                         Wrong input$                               '
-msg7 db 'the total amount is=$'
-msg8 db 'the total numbers of vehicles parked=$'
-msg9 db 'the total number of rikshaws parked=$'
+msg1 db  '                         PARKING IS FULL$                          '
+msg2 db  '                         WRONG INPUT$                              '
+msg7 db  '                    TOTAL AMOUNT =$'
+msg8 db  '                    TOTAL NUMBERS OF VEHICLES PARKED =$'
 msg10 db 'the total number of cars parked=$'
 msg11 db 'the total number of bikes parked=$'
 msg12 db '***Record deleted successfully***$'
