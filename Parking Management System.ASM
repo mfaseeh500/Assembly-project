@@ -115,29 +115,22 @@ jmp while_
 car:
 call caar
 
-
 rec:
 clr
 call recrd
 
-
 del:
+clr
 call delt
-
 
 bike:
 call bikes
 
-
-
-end_:
+end_:          ; for returning the control of program
 mov ah,4ch
 int 21h
-
 main endp
-
-
-caar proc
+caar proc      ;procedure for cars
 cmp count,'8'
 jle car1
 mov dx,offset msg1
@@ -175,10 +168,6 @@ inc c
 clr
 jmp while_
 jmp end_
-
-
-
-
 bikes proc    ;procrdure for bikes
 cmp count,'8'
 jle bike1
@@ -214,7 +203,6 @@ inc b
 clr
 jmp while_
 jmp end_
-
 
 recrd proc     ;procedure for printing all the records
 print msg3
