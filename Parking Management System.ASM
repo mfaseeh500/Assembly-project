@@ -1,29 +1,35 @@
-print macro p1
-    mov dx,offset p1
-    mov ah,09h
-    int 21h
-    endm
-clr macro     ;logic for clr screen but not used in the project till now
- mov  ah, 0
-  mov  al, 3
-  int  10h
-endm    
+print macro p1       ;logic for printing strings
+mov dx,offset p1
+mov ah,09h
+int 21h
+endm  
+
+clr macro     ;logic for clr screen 
+mov  ah, 0
+mov  al, 3
+int  10h
+endm 
+
+delay macro       ;logic for 2 second delay
+mov cx, 0Fh
+mov dx, 4240h
+mov ah, 86h
+int 15h
+mov ah, 86h
+int 15h
+endm
+
 .model small
 .stack 100h
 .data
 menu db  '****************************MENU**********************************$'
-menu1 db '                    Press 1 for rikshaw$                           '
-menu2 db '                    Press 2 for cars$                              '
-menu3 db '                    Press 3 for bike$                              '
-menu4 db '                    Press 4 to show the record$                    '
-menu5 db '                    Press 5 to delete all records$                 '
-menu6 db '                    Press 6 to exit the program$                   '
-msg1 db 'Parking Is Full$'
-msg2 db 'Wrong input$'
-msg3 db 'car$'
-msg4 db 'bus$'
-msg5 db 'record$'
-msg6 db 'there is more space$'
+menu1 db '                    PRESS 1 FOR CAR (RS 300)$                      '
+menu2 db '                    PRESS 2 FOR BIKE (RS 50)$                      '
+menu3 db '                    Press 3 TO SHOW THE RECORDS$                   '
+menu4 db '                    Press 4 TO DELETE ALL THE RECORDS$             '
+menu5 db '                    Press 5 TO EXIT$                               '
+msg1 db  '                         Parking Is Full$                           '
+msg2 db  '                         Wrong input$                               '
 msg7 db 'the total amount is=$'
 msg8 db 'the total numbers of vehicles parked=$'
 msg9 db 'the total number of rikshaws parked=$'
@@ -32,11 +38,6 @@ msg11 db 'the total number of bikes parked=$'
 msg12 db '***Record deleted successfully***$'
 amount dw 0
 count dw  '0'
-am1 dw ?
-am2 dw ?
-am3 dw ?
-
-
 r dw '0'
 c db '0'
 b db '0'
@@ -65,8 +66,7 @@ print menu4
 print newline
 print menu5
 print newline
-print menu6
-print newline
+
 
   ;Taking user input
 
@@ -77,29 +77,22 @@ print newline
 
   ;now compare
 mov al,bl
+
 cmp al,'1'
-je rikshw
-cmp al,'2'
 je car
+cmp al,'2'
+je bike
 cmp al,'3'
-je bus
-cmp al,'4'
 je rec
-cmp al,'5'
+cmp al,'4'
 je del
-cmp al,'6'
+cmp al,'5'
 je end_
-
-
-print msg2
-
-print newline
-
+print msg2       ;else invalid input will jump to While_ again
+print newline 
+delay
+clr
 jmp while_
-
-rikshw:
-call rikshaw
-
 
 car:
 call caar
@@ -113,8 +106,8 @@ del:
 call delt
 
 
-bus:
-call buss
+bike:
+call bikes
 
 
 
@@ -123,46 +116,6 @@ mov ah,4ch
 int 21h
 
 main endp
-
-
-
-
-
-rikshaw proc
-cmp count,'8'
-jle rikshw1
-print msg1
-jmp while_
-jmp end_
-
-rikshw1:
-mov ax,200
-add amount, ax
-mov dx,0 ; remainder is 0
-mov bx,10 
-mov cx,0
-l2:
-        div bx
-        push dx
-        mov dx,0
-        mov ah,0
-        inc cx
-        cmp ax,0
-        jne l2
-   
-l3:
-        pop dx
-        add dx,48
-        mov ah,2
-        int 21h
-loop l3
-;mov am1,dx
-inc count
-;mov dx,count
-inc r
-
-jmp while_
-jmp end_
 
 
 caar proc
@@ -200,21 +153,22 @@ loop l33
 
 inc count
 inc c
+clr
 jmp while_
 jmp end_
 
 
 
 
-buss proc
+bikes proc
 cmp count,'8'
-jle bus1
+jle bike1
 print msg1
 jmp while_
 jmp end_
 
-bus1:
-mov ax,400
+bike1:
+mov ax,50
 add amount, ax
 mov dx,0
 mov bx,10
@@ -238,6 +192,7 @@ loop l333
 
 inc count
 inc b
+clr
 jmp while_
 jmp end_
 
