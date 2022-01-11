@@ -47,6 +47,7 @@ menu2 db '                    PRESS 2 FOR BIKE (RS 50)$                      '
 menu3 db '                    Press 3 TO SHOW THE RECORDS$                   '
 menu4 db '                    Press 4 TO DELETE ALL THE RECORDS$             '
 menu5 db '                    Press 5 TO EXIT$                               '
+menu6 db '***************************RECORDS********************************$'
 msg1 db  '                    ***PARKING IS FULL***$                         '
 msg2 db  '                    WRONG INPUT$                                   '
 msg3 db  '                    TOTAL AMOUNT =$                                '
@@ -208,7 +209,7 @@ l333:
         int 21h
 loop l333
 
-      delay
+delay
 inc count
 inc b
 clr
@@ -216,6 +217,10 @@ jmp while_
 jmp end_
 
 recrd proc     ;procedure for printing all the records
+print newline
+print menu6  
+print newline
+print newline  
 print msg3
 mov ax, amount  ; print here the whole amount
 mov dx,0
