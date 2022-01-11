@@ -47,16 +47,19 @@ menu2 db '                    PRESS 2 FOR BIKE (RS 50)$                      '
 menu3 db '                    Press 3 TO SHOW THE RECORDS$                   '
 menu4 db '                    Press 4 TO DELETE ALL THE RECORDS$             '
 menu5 db '                    Press 5 TO EXIT$                               '
-msg1 db  '                    PARKING IS FULL$                               '
+msg1 db  '                    ***PARKING IS FULL***$                         '
 msg2 db  '                    WRONG INPUT$                                   '
 msg3 db  '                    TOTAL AMOUNT =$                                '
 msg4 db  '                    TOTAL NUMBERS OF VEHICLES PARKED =$            '
 msg5 db  '                    TOTAL CARS PARKED  =$                          '
 msg6 db  '                    TOTAL BIKES PARKED =$                          '
-msg7 db  '                    ***RECORD SUCCESSFULLY DELETED***$             '
+msg7 db  '                    ***RECORD SUCCESSFULLY DELETED***$             ' 
+msg8 db  '                    YOUR AMOUNT IS = $                              ' 
+msg9 db  '                    ENTER = $                                       ' 
+
 amount dw 0
 count dw  '0'
-r dw '0'
+
 c db '0'
 b db '0'
 newline db 0ah,0dh,"$"
@@ -83,8 +86,9 @@ print newline
 print menu4   
 print newline
 print menu5
+print newline 
 print newline
-
+print msg9
 
   ;Taking user input
 
@@ -98,7 +102,7 @@ mov al,bl
 
 cmp al,'1'
 je car
-cmp al,'2'
+cmp al,'2' 
 je bike
 cmp al,'3'
 je rec
@@ -112,7 +116,8 @@ delay
 clr
 jmp while_
 
-car:
+car: 
+print msg8
 call caar
 
 rec:
@@ -124,6 +129,7 @@ clr
 call delt
 
 bike:
+print msg8
 call bikes
 
 end_:          ; for returning the control of program
@@ -132,19 +138,21 @@ int 21h
 main endp
 caar proc      ;procedure for cars
 cmp count,'8'
-jle car1
-mov dx,offset msg1
-mov ah,9
-int 21h
+jle car1 
+clr
+print msg1
+delay
+clr
 jmp while_
 jmp end_
 
 car1:
-mov ax,300
+mov ax,100
 add amount, ax
 mov dx,0
 mov bx,10
 mov cx,0
+
 l22:
         div bx
         push dx
@@ -161,7 +169,7 @@ l33:
         int 21h
 loop l33
 
-;mov am2,amount
+delay
 
 inc count
 inc c
@@ -171,7 +179,10 @@ jmp end_
 bikes proc    ;procrdure for bikes
 cmp count,'8'
 jle bike1
-print msg1
+clr
+print msg1 
+delay
+clr
 jmp while_
 jmp end_
 
@@ -196,8 +207,8 @@ l333:
         mov ah,2
         int 21h
 loop l333
-;mov am3,amount
 
+      delay
 inc count
 inc b
 clr
@@ -228,9 +239,7 @@ print msg4
 mov dx,count
 mov ah,2
 int 21h
-mov dx,r
-mov ah,2
-int 21h
+
 print newline
 print msg5
 mov dl,c
@@ -247,7 +256,6 @@ jmp while_
 jmp end_
 
 delt proc    ;procedure for deleting
-mov r,'0'
 mov c,'0'
 mov b,'0'
 mov amount,0
